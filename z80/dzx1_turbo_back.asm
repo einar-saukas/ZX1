@@ -23,7 +23,7 @@ dzx1tb_new_offset:
         dec     b
         rl      c
 dzx1tb_msb_skip:
-        inc     bc
+        inc     c
         ld      (dzx1tb_last_offset+1), bc ; preserve new offset
         ld      bc, 1                   ; obtain length
         add     a, a

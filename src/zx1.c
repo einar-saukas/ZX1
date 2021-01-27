@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     int delta;
     int i;
 
-    printf("ZX1 v0.1: Optimal data compressor by Einar Saukas\n");
+    printf("ZX1 v0.2: Optimal data compressor by Einar Saukas\n");
 
     /* process hidden optional parameters */
     for (i = 1; i < argc && (*argv[i] == '-' || *argv[i] == '+'); i++) {
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]) {
         reverse(input_data, input_data+input_size-1);
 
     /* generate output file */
-    output_data = compress(optimize(input_data, input_size, skip, quick_mode ? MAX_OFFSET_ZX7 : MAX_OFFSET_ZX1), input_data, input_size, skip, backwards_mode, &output_size, &delta);
+    output_data = compress(optimize(input_data, input_size, skip, quick_mode ? MAX_OFFSET_ZX7 : MAX_OFFSET_ZX1-backwards_mode), input_data, input_size, skip, backwards_mode, &output_size, &delta);
 
     /* conditionally reverse output file */
     if (backwards_mode)

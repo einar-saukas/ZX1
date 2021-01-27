@@ -134,7 +134,7 @@ unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_siz
             if (backwards_mode) {
                 if (optimal->offset > 128) {
                     write_byte(((optimal->offset-1)&254)+1);
-                    write_byte((optimal->offset-1)/256*2+(optimal->offset-1)%2+2);
+                    write_byte(optimal->offset/256*2+(optimal->offset-1)%2+2);
                 } else {
                     write_byte((optimal->offset-1)*2);
                 }

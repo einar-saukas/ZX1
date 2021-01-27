@@ -39,7 +39,7 @@ dzx1sb_new_offset:
         dec     b
         rl      c
 dzx1sb_msb_skip:
-        inc     bc
+        inc     c
         push    bc                      ; preserve new offset
         call    dzx1sb_elias            ; obtain length
         inc     bc
