@@ -31,10 +31,10 @@
 #define minimum(a,b) (a < b ? a : b)
 
 int offset_ceiling(int index, int offset_limit) {
-    return index > offset_limit ? offset_limit : index;
+    return index > offset_limit ? offset_limit : index < INITIAL_OFFSET ? INITIAL_OFFSET : index;
 }
 
-int interlaced_elias_gamma_bits(int value) {
+int elias_gamma_bits(int value) {
     int bits = 1;
     while (value > 1) {
         bits += 2;
@@ -70,18 +70,18 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
     best_length[2] = 2;
 
     /* start with fake block */
-    assign(&(last_match[0]), allocate(-1, skip-1, 0, 0, NULL));
+    assign(&(last_match[INITIAL_OFFSET]), allocate(-1, skip-1, INITIAL_OFFSET, 0, NULL));
 
     /* process remaining bytes */
     for (index = skip; index < input_size; index++) {
         best_length_size = 2;
         max_offset = offset_ceiling(index, offset_limit);
-        for (offset = 0; offset <= max_offset; offset++) {
-            if (offset && index >= offset && input_data[index] == input_data[index-offset]) {
+        for (offset = 1; offset <= max_offset; offset++) {
+            if (index >= offset && input_data[index] == input_data[index-offset]) {
                 /* copy from last offset */
                 if (last_literal[offset]) {
                     length = index-last_literal[offset]->index;
-                    bits = last_literal[offset]->bits + 1 + interlaced_elias_gamma_bits(length);
+                    bits = last_literal[offset]->bits + 1 + elias_gamma_bits(length);
                     assign(&(last_match[offset]), allocate(bits, index, offset, length, last_literal[offset]));
                     if (!optimal[index] || optimal[index]->bits > bits)
                         assign(&(optimal[index]), last_match[offset]);
@@ -89,10 +89,10 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
                 /* copy from new offset */
                 if (++match_length[offset] > 1) {
                     if (best_length_size < match_length[offset]) {
-                        bits = optimal[index-best_length[best_length_size]]->bits + interlaced_elias_gamma_bits(best_length[best_length_size]-1);
+                        bits = optimal[index-best_length[best_length_size]]->bits + elias_gamma_bits(best_length[best_length_size]-1);
                         do {
                             best_length_size++;
-                            bits2 = optimal[index-best_length_size]->bits + interlaced_elias_gamma_bits(best_length_size-1);
+                            bits2 = optimal[index-best_length_size]->bits + elias_gamma_bits(best_length_size-1);
                             if (bits2 <= bits) {
                                 best_length[best_length_size] = best_length_size;
                                 bits = bits2;
@@ -102,7 +102,7 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
                         } while(best_length_size < match_length[offset]);
                     }
                     length = best_length[match_length[offset]];
-                    bits = optimal[index-length]->bits + 1 + (offset > 128 ? 16 : 8) + interlaced_elias_gamma_bits(length-1);
+                    bits = optimal[index-length]->bits + 1 + (offset > 128 ? 16 : 8) + elias_gamma_bits(length-1);
                     if (!last_match[offset] || last_match[offset]->index != index || last_match[offset]->bits > bits) {
                         assign(&last_match[offset], allocate(bits, index, offset, length, optimal[index-length]));
                         if (!optimal[index] || optimal[index]->bits > bits)
@@ -114,7 +114,7 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
                 match_length[offset] = 0;
                 if (last_match[offset]) {
                     length = index-last_match[offset]->index;
-                    bits = last_match[offset]->bits + 1 + interlaced_elias_gamma_bits(length) + length*8;
+                    bits = last_match[offset]->bits + 1 + elias_gamma_bits(length) + length*8;
                     assign(&(last_literal[offset]), allocate(bits, index, 0, length, last_match[offset]));
                     if (!optimal[index] || optimal[index]->bits > bits)
                         assign(&(optimal[index]), last_literal[offset]);

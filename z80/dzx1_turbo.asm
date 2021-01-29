@@ -8,7 +8,9 @@
 ; -----------------------------------------------------------------------------
 
 dzx1_turbo:
-        ld      bc, 0
+        ld      bc, $ffff               ; preserve default offset 1
+        ld      (dzx1t_last_offset+1), bc
+        inc     bc
         ld      a, $80
         jr      dzx1t_literals
 dzx1t_new_offset:
@@ -72,10 +74,11 @@ dzx1t_elias:
         rl      c
         add     a, a
         ret     nc
+dzx1t_elias_reload:
         add     a, a
         rl      c
+        rl      b
         add     a, a
-dzx1t_elias_reload:
         ld      a, (hl)                 ; load another group of 8 bits
         inc     hl
         rla
@@ -94,10 +97,6 @@ dzx1t_elias_reload:
         rl      c
         rl      b
         add     a, a
-        ret     nc
-        add     a, a
-        rl      c
-        rl      b
-        add     a, a
-        jp      dzx1t_elias_reload
+        jr      c, dzx1t_elias_reload
+        ret
 ; -----------------------------------------------------------------------------

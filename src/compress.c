@@ -74,7 +74,7 @@ void write_interlaced_elias_gamma(int value) {
 unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_size, int skip, int backwards_mode, int *output_size, int *delta) {
     BLOCK *next;
     BLOCK *prev;
-    int last_offset = 0;
+    int last_offset = INITIAL_OFFSET;
     int first = TRUE;
     int i;
 

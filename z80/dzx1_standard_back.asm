@@ -1,6 +1,6 @@
 ; -----------------------------------------------------------------------------
 ; ZX1 decoder by Einar Saukas
-; "Standard" version (65 bytes only) - BACKWARDS VARIANT
+; "Standard" version (68 bytes only) - BACKWARDS VARIANT
 ; -----------------------------------------------------------------------------
 ; Parameters:
 ;   HL: last source address (compressed data)
@@ -8,7 +8,8 @@
 ; -----------------------------------------------------------------------------
 
 dzx1_standard_back:
-        push    bc                      ; reserve offset position
+        ld      bc, 1                   ; preserve default offset 1
+        push    bc
         ld      a, $80
 dzx1sb_literals:
         call    dzx1sb_elias            ; obtain length

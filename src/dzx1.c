@@ -8,6 +8,7 @@
 #include <string.h>
 
 #define BUFFER_SIZE 65536  /* must be > MAX_OFFSET */
+#define INITIAL_OFFSET 1
 
 #define FALSE 0
 #define TRUE 1
@@ -109,7 +110,7 @@ void decompress() {
     output_size = 0;
     bit_mask = 0;
     backtrack = FALSE;
-    last_offset = 0;
+    last_offset = INITIAL_OFFSET;
 
 COPY_LITERALS:
     length = read_interlaced_elias_gamma();
@@ -156,7 +157,7 @@ int main(int argc, char *argv[]) {
     int forced_mode = FALSE;
     int i;
 
-    printf("DZX1 v0.2: Data decompressor by Einar Saukas\n");
+    printf("DZX1 v1.0: Data decompressor by Einar Saukas\n");
     
     /* process hidden optional parameters */
     for (i = 1; i < argc && *argv[i] == '-'; i++) {

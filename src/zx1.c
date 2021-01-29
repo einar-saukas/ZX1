@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     int delta;
     int i;
 
-    printf("ZX1 v0.2: Optimal data compressor by Einar Saukas\n");
+    printf("ZX1 v1.0: Optimal data compressor by Einar Saukas\n");
 
     /* process hidden optional parameters */
     for (i = 1; i < argc && (*argv[i] == '-' || *argv[i] == '+'); i++) {

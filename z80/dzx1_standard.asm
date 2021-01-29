@@ -1,6 +1,6 @@
 ; -----------------------------------------------------------------------------
 ; ZX1 decoder by Einar Saukas
-; "Standard" version (65 bytes only)
+; "Standard" version (68 bytes only)
 ; -----------------------------------------------------------------------------
 ; Parameters:
 ;   HL: source address (compressed data)
@@ -8,7 +8,8 @@
 ; -----------------------------------------------------------------------------
 
 dzx1_standard:
-        push    bc                      ; reserve offset position
+        ld      bc, $ffff               ; preserve default offset 1
+        push    bc
         ld      a, $80
 dzx1s_literals:
         call    dzx1s_elias             ; obtain length
