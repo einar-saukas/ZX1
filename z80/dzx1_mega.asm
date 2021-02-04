@@ -1,6 +1,6 @@
 ; -----------------------------------------------------------------------------
 ; ZX1 decoder by Einar Saukas
-; "Mega" version (408 bytes, 25% faster)
+; "Mega" version (406 bytes, 25% faster)
 ; -----------------------------------------------------------------------------
 ; Parameters:
 ;   HL: source address (compressed data)
@@ -9,7 +9,7 @@
 
 dzx1_mega:
         ld      bc, $ffff               ; preserve default offset 1
-        ld      (dzx1m_last_offset), bc
+        ld      (dzx1m_last_offset+1), bc
         inc     bc
         jr      dzx1m_literals0
 
@@ -26,7 +26,7 @@ dzx1m_new_offset6:
         ret     z                       ; check end marker
         rl      c
 dzx1m_msb_skip6:
-        ld      (dzx1m_last_offset), bc ; preserve new offset
+        ld      (dzx1m_last_offset+1), bc ; preserve new offset
         ld      bc, 1
         add     a, a                    ; obtain length
         jp      nc, dzx1m_length5
@@ -43,7 +43,7 @@ dzx1m_elias_length3:
 dzx1m_length1:
         inc     bc
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -76,7 +76,7 @@ dzx1m_elias_reuse3:
         jp      c, dzx1m_elias_reuse1
 dzx1m_reuse1:
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -96,7 +96,7 @@ dzx1m_new_offset0:
         ret     z                       ; check end marker
         rl      c
 dzx1m_msb_skip0:
-        ld      (dzx1m_last_offset), bc ; preserve new offset
+        ld      (dzx1m_last_offset+1), bc ; preserve new offset
         ld      bc, 1
         ld      a, (hl)                 ; load another group of 8 bits
         inc     hl
@@ -115,7 +115,7 @@ dzx1m_elias_length5:
 dzx1m_length3:
         inc     bc
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -148,7 +148,7 @@ dzx1m_elias_reuse5:
         jr      c, dzx1m_elias_reuse3
 dzx1m_reuse3:
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -168,7 +168,7 @@ dzx1m_new_offset2:
         ret     z                       ; check end marker
         rl      c
 dzx1m_msb_skip2:
-        ld      (dzx1m_last_offset), bc ; preserve new offset
+        ld      (dzx1m_last_offset+1), bc ; preserve new offset
         ld      bc, 1
         add     a, a                    ; obtain length
         jp      nc, dzx1m_length1
@@ -187,7 +187,7 @@ dzx1m_elias_length7:
 dzx1m_length5:
         inc     bc
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -220,7 +220,7 @@ dzx1m_elias_reuse7:
         jr      c, dzx1m_elias_reuse5
 dzx1m_reuse5:
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -240,7 +240,7 @@ dzx1m_new_offset4:
         ret     z                       ; check end marker
         rl      c
 dzx1m_msb_skip4:
-        ld      (dzx1m_last_offset), bc ; preserve new offset
+        ld      (dzx1m_last_offset+1), bc ; preserve new offset
         ld      bc, 1
         add     a, a                    ; obtain length
         jp      nc, dzx1m_length3
@@ -259,7 +259,7 @@ dzx1m_elias_length1:
 dzx1m_length7:
         inc     bc
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+        ld      hl, (dzx1m_last_offset+1)
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -292,7 +292,8 @@ dzx1m_elias_reuse1:
         jr      c, dzx1m_elias_reuse7
 dzx1m_reuse7:
         push    hl                      ; preserve source
-        ld      hl, (dzx1m_last_offset)
+dzx1m_last_offset:
+        ld      hl, 0
         add     hl, de                  ; calculate destination - offset
         ldir                            ; copy from offset
         pop     hl                      ; restore source
@@ -300,6 +301,4 @@ dzx1m_reuse7:
         jr      nc, dzx1m_literals6
 
         jp      dzx1m_new_offset6
-dzx1m_last_offset:
-        dw      0
 ; -----------------------------------------------------------------------------
