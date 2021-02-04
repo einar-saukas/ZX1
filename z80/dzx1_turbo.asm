@@ -1,5 +1,5 @@
 ; -----------------------------------------------------------------------------
-; ZX1 decoder by Einar Saukas
+; ZX1 decoder by Einar Saukas & introspec
 ; "Turbo" version (128 bytes, 20% faster)
 ; -----------------------------------------------------------------------------
 ; Parameters:
