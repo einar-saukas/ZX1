@@ -346,6 +346,12 @@ used **ZX1**.
 
 ## Links
 
+Projects using **ZX1**:
+
+* [MSXlib](https://github.com/theNestruo/msx-msxlib) - A set of libraries to
+create MSX videogame cartridges, that provides support for **ZX0**, **ZX1**,
+and **ZX7**.
+
 Related projects (by the same author):
 
 * [RCS](https://github.com/einar-saukas/RCS) - Use **ZX1** and **RCS** together
