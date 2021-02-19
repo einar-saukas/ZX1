@@ -95,17 +95,17 @@ The **ZX1** compressed format is very simple. There are only 3 kinds of blocks:
 
 * Literal (copy next N bytes from compressed file)
 ```
-0  Elias(length)  byte[1]  byte[2]  ...  byte[N]
+    0  Elias(length)  byte[1]  byte[2]  ...  byte[N]
 ```
 
 * Copy from last offset (repeat N bytes from last offset)
 ```
-0  Elias(length)
+    0  Elias(length)
 ```
 
 * Copy from new offset (repeat N bytes from new offset)
 ```
-1  offset  Elias(length-1)
+    1  offset  Elias(length-1)
 ```
 
 **ZX1** needs only 1 bit to distinguish between these blocks, because literal
@@ -346,7 +346,13 @@ used **ZX1**.
 
 ## Links
 
-Projects using **ZX1**:
+**ZX1** ported to other platforms:
+
+* [Intel 8080](https://gitlab.com/ivagor/dezx1)
+
+* [PDP11](https://gitlab.com/ivagor/dezx1)
+
+Tools supporting **ZX1**:
 
 * [MSXlib](https://github.com/theNestruo/msx-msxlib) - A set of libraries to
 create MSX videogame cartridges, that provides support for **ZX0**, **ZX1**,
