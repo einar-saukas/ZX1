@@ -358,6 +358,10 @@ Tools supporting **ZX1**:
 create MSX videogame cartridges, that provides support for **ZX0**, **ZX1**,
 and **ZX7**.
 
+* [ConvImgCpc](https://github.com/DemoniakLudo/ConvImgCpc) - An image
+conversion utility for Amstrad CPC, that provides built-in support 
+for **ZX0** and **ZX1**.
+
 Related projects (by the same author):
 
 * [RCS](https://github.com/einar-saukas/RCS) - Use **ZX1** and **RCS** together

@@ -5,7 +5,7 @@ EXTENSION = .exe
 
 all: zx1 dzx1
 
-zx1: zx1.c optimize.c compress.c memory.c
+zx1: zx1.c optimize.c compress.c memory.c zx1.h
 	$(CC) $(CFLAGS) -o zx1$(EXTENSION) zx1.c optimize.c compress.c memory.c
 
 dzx1: dzx1.c
