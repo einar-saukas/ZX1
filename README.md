@@ -91,7 +91,7 @@ for input and output files, and only memory space O(w) for processing.
 
 ## File Format
 
-The **ZX1** compressed format is very simple. There are only 3 kinds of blocks:
+The **ZX1** compressed format is very simple. There are only 3 types of blocks:
 
 * Literal (copy next N bytes from compressed file)
 ```
@@ -348,9 +348,9 @@ used **ZX1**.
 
 **ZX1** ported to other platforms:
 
-* [Intel 8080](https://gitlab.com/ivagor/dezx1)
+* [DEC PDP11](https://gitlab.com/ivagor/dezx1)
 
-* [PDP11](https://gitlab.com/ivagor/dezx1)
+* [Intel 8080](https://gitlab.com/ivagor/dezx1)
 
 Tools supporting **ZX1**:
 
@@ -359,7 +359,7 @@ create MSX videogame cartridges, that provides support for **ZX0**, **ZX1**,
 and **ZX7**.
 
 * [ConvImgCpc](https://github.com/DemoniakLudo/ConvImgCpc) - An image
-conversion utility for Amstrad CPC, that provides built-in support 
+conversion utility for Amstrad CPC, that provides built-in support
 for **ZX0** and **ZX1**.
 
 Related projects (by the same author):
@@ -369,6 +369,11 @@ to improve compression of ZX Spectrum screens.
 
 * [ZX0](https://github.com/einar-saukas/ZX0) - The original compressor on
 which **ZX1** is based.
+
+* [ZX1](https://github.com/einar-saukas/ZX1) - The official **ZX1** repository.
+
+* [ZX2](https://github.com/einar-saukas/ZX2) - A minimalist version of **ZX1**,
+intended for compressing very small files.
 
 * [ZX7](https://spectrumcomputing.co.uk/entry/27996/ZX-Spectrum/ZX7) - A widely
 popular predecessor compressor (now superseded by **ZX0** and **ZX1**).
