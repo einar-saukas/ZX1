@@ -348,11 +348,14 @@ used **ZX1**.
 
 **ZX1** ported to other platforms:
 
-* [DEC PDP11](https://gitlab.com/ivagor/dezx1)
+* [DEC PDP11](https://github.com/ivagorRetrocomp/DeZX)
 
-* [Intel 8080](https://gitlab.com/ivagor/dezx1)
+* [Intel 8080](https://github.com/ivagorRetrocomp/DeZX)
 
 Tools supporting **ZX1**:
+
+* [z88dk](http://www.z88dk.org/) - The main C compiler for Z80 machines, that
+provides built-in support for **ZX0**, **ZX1**, **ZX2**, and **ZX7**.
 
 * [MSXlib](https://github.com/theNestruo/msx-msxlib) - A set of libraries to
 create MSX videogame cartridges, that provides support for **ZX0**, **ZX1**,
