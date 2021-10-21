@@ -38,7 +38,7 @@ int diff;
 void read_bytes(int n, int *delta) {
     input_index += n;
     diff += n;
-    if (diff > *delta)
+    if (*delta < diff)
         *delta = diff;
 }
 
@@ -80,16 +80,12 @@ unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_siz
     int i;
 
     /* calculate and allocate output buffer */
-    *output_size = (optimal->bits+17+7)/8;
+    *output_size = (optimal->bits+24)/8;
     output_data = (unsigned char *)malloc(*output_size);
     if (!output_data) {
          fprintf(stderr, "Error: Insufficient memory\n");
          exit(1);
     }
-
-    /* initialize delta */
-    diff = *output_size-input_size+skip;
-    *delta = 0;
 
     /* un-reverse optimal sequence */
     prev = NULL;
@@ -100,10 +96,14 @@ unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_siz
         optimal = next;
     }
 
+    /* initialize delta */
+    diff = *output_size-input_size+skip;
+    *delta = 0;
     input_index = skip;
     output_index = 0;
     bit_mask = 0;
 
+    /* generate output */
     for (optimal = prev->chain; optimal; prev=optimal, optimal = optimal->chain) {
         length = optimal->index-prev->index;
 
@@ -168,5 +168,6 @@ unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_siz
         write_byte(255);
     }
 
+    /* done! */
     return output_data;
 }

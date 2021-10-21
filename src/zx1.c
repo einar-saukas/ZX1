@@ -61,14 +61,14 @@ int main(int argc, char *argv[]) {
 
     printf("ZX1 v1.4: Optimal data compressor by Einar Saukas\n");
 
-    /* process hidden optional parameters */
+    /* process optional parameters */
     for (i = 1; i < argc && (*argv[i] == '-' || *argv[i] == '+'); i++) {
         if (!strcmp(argv[i], "-f")) {
             forced_mode = TRUE;
-        } else if (!strcmp(argv[i], "-q")) {
-            quick_mode = TRUE;
         } else if (!strcmp(argv[i], "-b")) {
             backwards_mode = TRUE;
+        } else if (!strcmp(argv[i], "-q")) {
+            quick_mode = TRUE;
         } else if ((skip = atoi(argv[i])) <= 0) {
             fprintf(stderr, "Error: Invalid parameter %s\n", argv[i]);
             exit(1);

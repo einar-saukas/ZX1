@@ -28,7 +28,6 @@ int bit_mask;
 int bit_value;
 int backtrack;
 int last_byte;
-int last_offset;
 
 int read_byte() {
     if (input_index == partial_counter) {
@@ -93,6 +92,7 @@ void write_bytes(int offset, int length) {
 }
 
 void decompress() {
+    int last_offset = INITIAL_OFFSET;
     int length;
     int i;
 
@@ -110,23 +110,19 @@ void decompress() {
     output_size = 0;
     bit_mask = 0;
     backtrack = FALSE;
-    last_offset = INITIAL_OFFSET;
 
 COPY_LITERALS:
     length = read_interlaced_elias_gamma();
-    for (i = 0; i < length; i++) {
+    for (i = 0; i < length; i++)
         write_byte(read_byte());
-    }
-    if (read_bit()) {
+    if (read_bit())
         goto COPY_FROM_NEW_OFFSET;
-    }
 
 /*COPY_FROM_LAST_OFFSET:*/
     length = read_interlaced_elias_gamma();
     write_bytes(last_offset, length);
-    if (!read_bit()) {
+    if (!read_bit())
         goto COPY_LITERALS;
-    }
 
 COPY_FROM_NEW_OFFSET:
     last_offset = read_byte();
@@ -146,11 +142,10 @@ COPY_FROM_NEW_OFFSET:
     }
     length = read_interlaced_elias_gamma()+1;
     write_bytes(last_offset, length);
-    if (read_bit()) {
+    if (read_bit())
         goto COPY_FROM_NEW_OFFSET;
-    } else {
+    else
         goto COPY_LITERALS;
-    }
 }
 
 int main(int argc, char *argv[]) {
