@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
     int forced_mode = FALSE;
     int i;
 
-    printf("DZX1 v1.4: Data decompressor by Einar Saukas\n");
+    printf("DZX1 v1.5: Data decompressor by Einar Saukas\n");
     
     /* process hidden optional parameters */
     for (i = 1; i < argc && *argv[i] == '-'; i++) {
